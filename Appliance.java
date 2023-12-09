@@ -41,11 +41,11 @@ public class Appliance {
         return applianceId;
     }
 
-    public boolean isOn() {
+    public boolean getIsOn() {
         return isOn;
     }
 
-    public boolean isSmart() {
+    public boolean getIsSmart() {
         return isSmart;
     }
 
@@ -57,11 +57,6 @@ public class Appliance {
 
         // check probability to turn on/off appliance
         isOn = randomValue < probability;
-    }
-
-    // setIsOn() method to set status without probability
-    public void setIsOn(boolean isOn){
-        this.isOn = isOn;
     }
 
     
