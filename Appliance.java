@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Appliance {
     private String type;
-    private int onWattage;
+    protected int onWattage;
     private double probability;
     private int location;
     private String applianceId;
