@@ -3,12 +3,39 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class PowerTester {
-	static ArrayList<SmartAppliance> smartList = new ArrayList<>();
-	static ArrayList<Appliance> appList = new ArrayList<>();
 	static ArrayList<Appliance> wholeArea = new ArrayList<>();
 	static ArrayList<ArrayList<Appliance>> divArea = new ArrayList<>();
 	static ArrayList<Long> locationList = new ArrayList<>();
 	static Scanner scnr = new Scanner(System.in);
+	
+	public void readAppFile(String file) {
+		try {
+			Scanner scnr = new Scanner(new File(file));
+			while (scnr.hasNext()) {
+				String placeholder = scnr.nextLine();
+				try (Scanner parse = new Scanner(placeholder)) {
+					parse.useDelimiter(",");
+					long location = parse.nextLong();
+					String name = parse.next();
+					int powerUse = parse.nextInt();
+					double state = parse.nextDouble();
+					boolean type = parse.nextBoolean();
+					double percent = parse.nextDouble();
+					locationList.add(location);
+					if (type) {
+						SmartAppliance smartApp = new SmartAppliance(type, powerUse, state, location, name, percent);
+						wholeArea.add(smartApp);
+					} else {
+						Appliance App = new Appliance(type, powerUse, state, location, name);
+						wholeArea.add(app);
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
     public static void main(String[] args) {
 		//User interactive part
