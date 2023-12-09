@@ -4,18 +4,20 @@ public class Appliance {
     private String type;
     private int onWattage;
     private double probability;
-    private long location;
+    private int location;
     private String applianceId;
     private boolean isOn;
+    private boolean isSmart;
 
     // Constructor
-    public Appliance(String type, int onWattage, double probability, long location, String applianceId) {
+    public Appliance(String type, int onWattage, double probability, int location, String applianceId, boolean isSmart) {
         this.type = type;
         this.onWattage = onWattage;
         this.probability = probability;
         this.location = location;
         this.applianceId = applianceId;
         this.isOn = false; // default state is off
+        this.isSmart = isSmart;
     }
 
     // Getter methods
@@ -43,7 +45,12 @@ public class Appliance {
         return isOn;
     }
 
-    // Setter method to turn the appliance on or off based on probability
+    public boolean isSmart() {
+        return isSmart;
+    }
+
+
+    // method to turn appliance on or off based on probability
     public void updateStatus() {
         Random random = new Random();
         double randomValue = random.nextDouble();
@@ -52,13 +59,10 @@ public class Appliance {
         isOn = randomValue < probability;
     }
 
-    // Method to get current wattage based on appliance state
-    public int getCurrentWattage() {
-        return isOn ? onWattage : 0;
+    // setIsOn() method to set status without probability
+    public void setIsOn(boolean isOn){
+        this.isOn = isOn;
     }
 
-    // Method to get current state of appliance (ON/OFF)
-    public String getCurrentState() {
-        return isOn ? "ON" : "OFF";
-    }
+    
 }
