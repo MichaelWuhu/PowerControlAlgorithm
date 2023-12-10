@@ -2,7 +2,7 @@ public class SmartAppliance extends Appliance{
 
     private double lowModeReduction;
     boolean onLow;
-    private int onWattage = getOnWattage();
+    private int onWattage = super.getOnWattage();
 
     public SmartAppliance(String type, int onWattage, double probability, int location, String applianceId, boolean isSmart, boolean onLow, double lowModeReduction) { // initializes SmartAppliance object
         super(applianceId, onWattage, probability, location, applianceId, isSmart);
@@ -16,7 +16,6 @@ public class SmartAppliance extends Appliance{
 
 
     public int getOnWattage() { //checks to see whether to return normal watts if onLow is false, or low watts if onLow is true
-        super.getOnWattage();
         if (onLow == true) {
             return (int) ((double)(onWattage) * lowModeReduction); //returns low wattage (normal onWatts times lowMode percentage)
         }
