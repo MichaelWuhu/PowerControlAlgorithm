@@ -35,7 +35,7 @@ public class Location {
     }
 
     public String toString(){
-        return "Number of smart appliances set low: " indexSmartOn + "Number of appliances turned off: " + indexOn;
+        return "Number of smart appliances set low: " indexSmartOn + "\nNumber of appliances turned off: " + indexOn + "\nTotal number of appliances affected: " + (indexSmartOn + indexOn) ;
     }
 
 }
