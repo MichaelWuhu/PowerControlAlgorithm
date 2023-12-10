@@ -2,6 +2,7 @@ public class Location {
     private int locationNo;
     private String[] appliances;
 
+
      public Location(int locationNo, String[] appliances) {
         this.locationNo = locationNo;
         this.appliances = appliances;
@@ -20,13 +21,21 @@ public class Location {
     }
 
     public void brownOut(){
+        int indexSmartOn;
+        int indexOn;
         for (int i = 0 ; i < appliance.length ; i++){
+            if (appliances[i].getIsSmart) {
+                appliance[i].setOnlow(true);
+                indexSmartOn += 1;
+            } else{
                 appliances[i].isOn(false);
+                indexOn +=1;
+            }
         }
     }
 
     public String toString(){
-        return "Location Number: " locationNo + "Appliances: " + Arrays.toString(appliances));
+        return "Number of smart appliances set low: " indexSmartOn + "Number of appliances turned off: " + indexOn;
     }
 
 }
