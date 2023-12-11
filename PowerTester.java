@@ -394,7 +394,7 @@ public class PowerTester {
 			System.out.println("Type \"F\" Read Appliances from a file");
 			System.out.println("Type \"S\" To Start the simulation");
 			System.out.println("Type \"Q\" Quit the program");
-			option1 = scnr.nextLine().charAt(0);
+			option1 = scnr.next().charAt(0);
 
 			if (option1 == 'A') {
 				addApplication();
@@ -406,7 +406,7 @@ public class PowerTester {
 				}
 			} else if (option1 == 'F') {
 				System.out.println("Enter the file path: ");
-				String filePath = scnr.nextLine();
+				String filePath = scnr.next();
 				readAppFile(filePath);
 			} else if (option1 == 'S') {
 				if (wholeArea.size() <= 0) {
