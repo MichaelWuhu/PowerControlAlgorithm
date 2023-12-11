@@ -6,7 +6,7 @@ import java.io.*;
 
 public class PowerTester {
 	static ArrayList<Appliance> wholeArea = new ArrayList<>();
-	static ArrayList<Long> locationList = new ArrayList<>();
+	static ArrayList<Integer> locationList = new ArrayList<>();
 	static ArrayList<ArrayList<Appliance>> divArea = new ArrayList<>();
 	static ArrayList<Appliance> onApps = new ArrayList<>();
 	static ArrayList<SmartAppliance> smartOnApps = new ArrayList<>();
@@ -54,7 +54,7 @@ public class PowerTester {
 				String placeholder = scnr.nextLine();
 				try (Scanner parse = new Scanner(placeholder)) {
 					parse.useDelimiter(",");
-					long location = parse.nextLong();
+					int location = parse.nextInt();
 					String name = parse.next();
 					int powerUse = parse.nextInt();
 					double prob = parse.nextDouble();
@@ -111,7 +111,7 @@ public class PowerTester {
 		
 		for ( int k = 0; k < timeSteps; ++k ) {
 			divArea.clear();
-			ArrayList<Long> totalLocations = (ArrayList<Long>) locationList.clone();
+			ArrayList<Integer> totalLocations = (ArrayList<Integer>) locationList.clone();
 			int totalWattage = 0;
 			int locationCounter = 0;
 			int T = 0;
@@ -224,7 +224,7 @@ public class PowerTester {
 			
 			
 			for (int i = 0; i < locationList.size(); ++i) {
-				long location = locationList.get(i);
+				int location = locationList.get(i);
 				for (int h = 0; h < smartOnApps.size(); ++h) {
 					if (smartOnApps.get(h).getOnLow() && smartOnApps.get(h).getLocation() == location) {
 						smartPoints[i] += 1;
@@ -299,7 +299,7 @@ public class PowerTester {
 				 writer.write(System.lineSeparator());
 				 for (int i = 0; i < brownLocation.size(); ++i) {
 					 System.out.println(locationList.get(brownLocation.get(i)));
-					 writer.write(Long.toString(locationList.get(brownLocation.get(i))));
+					 writer.write(Integer.toString(locationList.get(brownLocation.get(i))));
 					 writer.write(System.lineSeparator());
 				 }
 				 
@@ -331,7 +331,7 @@ public class PowerTester {
 		System.out.println("Type \"true\" if the appliance is smart:");
 		boolean type = scnr.nextBoolean();
 		System.out.println("Enter the appliance's location ID:");
-		long location = scnr.nextLong();
+		int location = scnr.nextInt();
 		System.out.println("Enter the name of the appliance:");
 		String name = scnr.nextLine();
 		System.out.println("Enter the appliance's watt usage:");
