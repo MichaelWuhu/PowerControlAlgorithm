@@ -49,7 +49,10 @@ public class Appliance {
         return isSmart;
     }
 
-
+    public String toString() {
+		return location + "," + applianceId + "," + onWattage + "," + probability + "," + type;
+	}
+    
     // method to turn appliance on or off based on probability
     public void updateStatus() {
         Random random = new Random();
