@@ -1,23 +1,21 @@
 import java.util.Random;
 
 public class Appliance {
-    private String type;
+    private boolean type;
     private int onWattage;
     private double probability;
     private int location;
     private String applianceId;
     private boolean isOn;
-    private boolean isSmart;
 
     // Constructor
-    public Appliance(String type, int onWattage, double probability, int location, String applianceId, boolean isSmart) {
+    public Appliance(boolean type, int onWattage, double probability, int location, String applianceId) {
         this.type = type;
         this.onWattage = onWattage;
         this.probability = probability;
         this.location = location;
         this.applianceId = applianceId;
         this.isOn = false; // default state is off
-        this.isSmart = isSmart;
     }
 
     // Getter methods
@@ -33,7 +31,7 @@ public class Appliance {
         return probability;
     }
 
-    public long getLocation() {
+    public int getLocation() {
         return location;
     }
 
