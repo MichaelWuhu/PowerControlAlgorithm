@@ -13,9 +13,8 @@ public class PowerTester {
 	static Scanner scnr = new Scanner(System.in);
 	static String folderName = "PowerGrid";
 	static String directoryPath = "C:/";
-	public static void fileWrite(int time, int imapact, int[] active, int[] smart) {
-		// Names for the file path
-        String fileName = "TimeStep " + (time+1) + ".txt";
+	static String fileName = "Simulation.txt";
+	public static void fileWrite(int time, int preWatt, int postWatt, int sLow, int locationCount, int appCount) {
 
         // Create the folder
         File directory = new File(directoryPath, folderName);
@@ -25,17 +24,22 @@ public class PowerTester {
         String filePath = directoryPath + folderName + "/" + fileName;
         try {
             // Create a FileWriter object to write to the file
-            FileWriter writer = new FileWriter(filePath);
+            FileWriter writer = new FileWriter(filePath, true);
 
             // Write and print the current time step
-            for (int i = 0; i < divArea.size(); ++i) {
-            	ArrayList<Appliance> locale = divArea.get(i);
-            	for (int j = 0; j < locale.size(); ++j) {
-            		writer.write(locale.get(j).toString());
-                    writer.write(System.lineSeparator());
-            	}
-            	
-            }
+            writer.write("/////////////// Time Step: " + (time+1) + " ///////////////");
+            writer.write(System.lineSeparator());
+            writer.write("Total Starting Wattage: " + preWatt);
+            writer.write(System.lineSeparator());
+            writer.write("Total Wattage After: " + postWatt);
+            writer.write(System.lineSeparator());
+            writer.write("Ammount of Smart Appliances set to Low: " + sLow);
+            writer.write(System.lineSeparator());
+            writer.write("Ammount of Locations Browned Out: " + locationCount);
+            writer.write(System.lineSeparator());
+            writer.write("Amount of Appliances Turned Off: " + appCount);
+            writer.write(System.lineSeparator());
+            writer.write(System.lineSeparator());
             writer.close();
         } catch (IOException e) {
             // Handle IO exception
@@ -106,7 +110,6 @@ public class PowerTester {
 		///////////////////////////////////////////////////////////
 		
 		for ( int k = 0; k < timeSteps; ++k ) {
-			System.out.println("/////////////// Time Step: " + (k+1) + " ///////////////");
 			divArea.clear();
 			ArrayList<Long> totalLocations = (ArrayList<Long>) locationList.clone();
 			int totalWattage = 0;
@@ -140,7 +143,8 @@ public class PowerTester {
 			/////////////////////////////////////////
 			//////// Start of the process for turning appliances off or low
 			///////////////////////////////////////////////////////////
-			System.out.println("Total Starting Wattage: " + totalWattage);
+			int preWattage = totalWattage;
+			
 			while (totalWattage > maxWattage) {
 				
 				totalWattage = 0;
@@ -233,23 +237,30 @@ public class PowerTester {
 				}
 			}
 			/////////////////////////////////////////
-			//////// Printing data from the Time Step
+			//////// Printing data from the Time Step to console and file
 			///////////////////////////////////////////////////////////
+			System.out.println("/////////////// Time Step: " + (k+1) + " ///////////////");
+			System.out.println("Total Starting Wattage: " + preWattage);
 			System.out.println("Total Wattage After: " + totalWattage);
 			System.out.println("Ammount of Smart Appliances set to Low: " + T);
 			System.out.println("Ammount of Locations Browned Out: " + locationCounter);
 			System.out.println("Amount of Appliances Turned Off: " + appCount);
 			System.out.println();
+			fileWrite(k, preWattage, totalWattage, T, locationCounter, appCount);
 		}
 		
 		/////////////////////////////////////////
-		//////// Printing Summary of all Time Steps
+		//////// Printing Summary of all Time Steps to console and file
 		///////////////////////////////////////////////////////////
 		System.out.println("/////////////// Summary ///////////////");
+		ArrayList<Integer> brownLocation = new ArrayList<>();
 		int impactLocation = 0;
 		int active = locationPoints[0];
 		int smart = 0;
 		for (int i = 0; i < locationPoints.length; ++i) {
+			if (locationPoints[i] == 0) {
+				brownLocation.add(i);
+			}
 			if (active > locationPoints[i]) {
 				active = locationPoints[i];	
 			}
@@ -261,27 +272,58 @@ public class PowerTester {
 				
 			}
 		}
-		if (smart == 0 && active == 0) {
-			int brown = 0;
-			for (int i = 0; i < locationPoints.length; ++i) {
-				if (locationPoints[i] == 0) {
-					brown += 1;
-				}
-			}
-			System.out.println(brown + " locations were browned out every time for all " + timeSteps + " runs");
-			
-		} else if (timeSteps == locationPoints[impactLocation]) {
-			
-			System.out.println("Most Impacted Location: " + locationList.get(impactLocation) + " with " + smartPoints[impactLocation] + 
-					" total appliances set to low over the course of " + timeSteps + " runs");
-			
-		} else {
-			
-			System.out.println("Most Impacted Location: " + locationList.get(impactLocation) + " with " + (timeSteps-locationPoints[impactLocation]) + 
-					" total brown outs and " + smartPoints[impactLocation] + " total appliances set to low over the course of " + timeSteps + " runs" );
-			
-		}
-		System.out.println();
+		 // Create the folder
+		 File directory = new File(directoryPath, folderName);
+		 directory.mkdirs();
+		 
+		 // Combine the directory path and file name to create the complete file path
+		 String filePath = directoryPath + folderName + "/" + fileName;
+		 
+		 try {
+			 // Create a FileWriter object to write to the file
+			 FileWriter writer = new FileWriter(filePath, true);
+			 writer.write("/////////////// Summary ///////////////");
+			 writer.write(System.lineSeparator());
+			 if (smart == 0 && active == 0) {
+				 int brown = 0;
+				 for (int i = 0; i < locationPoints.length; ++i) {
+					 if (locationPoints[i] == 0) {
+						 brown += 1;
+					 }
+				 }
+				 writer.write(brown + " locations were browned out every time for all " + timeSteps + " runs");
+				 writer.write(System.lineSeparator());
+				 System.out.println(brown + " locations were browned out every time for all " + timeSteps + " runs");
+				 System.out.println("List of those locations: ");
+				 writer.write("List of those locations: ");
+				 writer.write(System.lineSeparator());
+				 for (int i = 0; i < brownLocation.size(); ++i) {
+					 System.out.println(locationList.get(brownLocation.get(i)));
+					 writer.write(Long.toString(locationList.get(brownLocation.get(i))));
+					 writer.write(System.lineSeparator());
+				 }
+				 
+			 } else if (timeSteps == locationPoints[impactLocation]) {
+				 writer.write("Most Impacted Location: " + locationList.get(impactLocation) + " with " + smartPoints[impactLocation] + 
+						 " total appliances set to low over the course of " + timeSteps + " runs");
+				 System.out.println("Most Impacted Location: " + locationList.get(impactLocation) + " with " + smartPoints[impactLocation] + 
+						 " total appliances set to low over the course of " + timeSteps + " runs");
+				 
+			 } else {
+				 writer.write("Most Impacted Location: " + locationList.get(impactLocation) + " with " + (timeSteps-locationPoints[impactLocation]) + 
+						 " total brown outs and " + smartPoints[impactLocation] + " total appliances set to low over the course of " + timeSteps + " runs");
+				 System.out.println("Most Impacted Location: " + locationList.get(impactLocation) + " with " + (timeSteps-locationPoints[impactLocation]) + 
+						 " total brown outs and " + smartPoints[impactLocation] + " total appliances set to low over the course of " + timeSteps + " runs" );
+			 }
+	            
+			 System.out.println();
+			 writer.close();
+		 } catch (IOException e) {
+			 // Handle IO exception
+			 e.printStackTrace();
+		 }
+		
+		
 		
 	}
 	
@@ -325,7 +367,18 @@ public class PowerTester {
 
 		//User interactive part
 		String option1;
-		readAppFile("C:/PowerGrid/app.txt");
+		
+		//clear file before use
+		String file = directoryPath + folderName + "/" + fileName;
+		try {
+            // Create a FileWriter object to write to the file
+            FileWriter writer = new FileWriter(file);
+            writer.close();
+		} catch (IOException e) {
+            // Handle IO exception
+            e.printStackTrace();
+        }
+		
 		while(true){// Application menu to be displayed to the user.
 			System.out.println("Select an option:");
 			System.out.println("Type \"A\" Add an appliance");
@@ -366,5 +419,4 @@ public class PowerTester {
 			
 		}
 	}
-
 }
