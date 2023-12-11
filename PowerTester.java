@@ -34,9 +34,9 @@ public class PowerTester {
 			writer.write(System.lineSeparator());
 			writer.write("Total Wattage After: " + postWatt);
 			writer.write(System.lineSeparator());
-			writer.write("Ammount of Smart Appliances set to Low: " + sLow);
+			writer.write("Amount of Smart Appliances set to Low: " + sLow);
 			writer.write(System.lineSeparator());
-			writer.write("Ammount of Locations Browned Out: " + locationCount);
+			writer.write("Amount of Locations Browned Out: " + locationCount);
 			writer.write(System.lineSeparator());
 			writer.write("Amount of Appliances Turned Off: " + appCount);
 			writer.write(System.lineSeparator());
@@ -243,8 +243,8 @@ public class PowerTester {
 			System.out.println("/////////////// Time Step: " + (k + 1) + " ///////////////");
 			System.out.println("Total Starting Wattage: " + preWattage);
 			System.out.println("Total Wattage After: " + totalWattage);
-			System.out.println("Ammount of Smart Appliances set to Low: " + T);
-			System.out.println("Ammount of Locations Browned Out: " + locationCounter);
+			System.out.println("Amount of Smart Appliances set to Low: " + T);
+			System.out.println("Amount of Locations Browned Out: " + locationCounter);
 			System.out.println("Amount of Appliances Turned Off: " + appCount);
 			System.out.println();
 			fileWrite(k, preWattage, totalWattage, T, locationCounter, appCount);
