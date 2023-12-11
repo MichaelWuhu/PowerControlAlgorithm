@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 
 public class ApplianceGenerator {
+	static String folderName = "PowerGrid";
+	static String directoryPath = "C:/";
+	static String fileName = "output.txt";
 	public static class Appliance {
 		public String name;
 		public int onW, offW; 
@@ -23,7 +26,7 @@ public class ApplianceGenerator {
 
 	public static void main( String [] args ) throws IOException {
 		Appliance [] app = new Appliance[100];  // default 100 possible appliance types
-		File inputFile = new File( "ApplianceDetail.txt" );
+		File inputFile = new File(directoryPath + folderName + "/" + "ApplianceDetail.txt");
 		Scanner scan = new Scanner( inputFile );
 		int count=0;
 		while ( scan.hasNext( ) ) {
@@ -47,7 +50,8 @@ Smart appliances (if "on") power reduction percent when changed to "low" status(
 */
 		try
 		{
-			FileWriter fw = new FileWriter( "output.txt", false);
+			String filePath = directoryPath + folderName + "/" + fileName;
+			FileWriter fw = new FileWriter(filePath, false);
 			BufferedWriter bw = new BufferedWriter( fw );
 			for (long location=1;location<=100 ;location++ ) {   // default 100 locations
 				int applianceCount=(int)(Math.random()*6)+15;  //15-20 appliances per location 
