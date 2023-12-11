@@ -286,13 +286,46 @@ public class PowerTester {
 	}
 	
 	public static void addApplication() {
-		System.out.println("Filler");
+		System.out.println("Type \"true\" if the appliance is smart:");
+		boolean type = scnr.nextBoolean();
+		System.out.println("Enter the appliance's location ID:");
+		long location = scnr.nextLong();
+		System.out.println("Enter the name of the appliance:");
+		String name = scnr.nextLine();
+		System.out.println("Enter the appliance's watt usage:");
+		int watts = scnr.nextInt();
+		System.out.println("Enter the appliance's probability of being on:");
+		double prob = scnr.nextDouble();
+		System.out.println("Enter the appliance's location ID:");
+		if (type) {
+			System.out.println("Enter the appliance's low usage percent (1.0-0.0):");
+			double low = scnr.nextDouble();
+			SmartAppliance newSmart = new SmartAppliance(type, watts, prob, location, name, low);
+			wholeArea.add(newSmart);
+		} else {
+			Appliance newApp = new Appliance(type, watts, prob, location, name);
+			wholeArea.add(newApp);
+		}
+		System.out.println("Successfully added your appliance");
+		
+	}
+	
+	public static void deleteApp() {
+		System.out.println("Enter the index number of the appliance to delete:");
+		int input = scnr.nextInt();
+		if (input >= wholeArea.size() || input < 0) {
+			System.out.println("Enter a valid index number:");
+			input = scnr.nextInt();
+		}
+		wholeArea.remove(input);
+		System.out.println("Successfully removed appliance");
 	}
 	
 	public static void main(String[] args) {
 
 		//User interactive part
 		String option1;
+		readAppFile("C:/PowerGrid/app.txt");
 		while(true){// Application menu to be displayed to the user.
 			System.out.println("Select an option:");
 			System.out.println("Type \"A\" Add an appliance");
@@ -307,7 +340,7 @@ public class PowerTester {
 				addApplication();
 			}
 			else if (option1.equals("D")) {
-				
+				deleteApp();
 			}
 			else if (option1.equals("L")) {
 				
