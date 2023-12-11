@@ -339,12 +339,11 @@ public class PowerTester {
 		System.out.println("Enter the appliance's location ID:");
 		int location = scnr.nextInt();
 		System.out.println("Enter the name of the appliance:");
-		String name = scnr.nextLine();
+		String name = scnr.next();
 		System.out.println("Enter the appliance's watt usage:");
 		int watts = scnr.nextInt();
 		System.out.println("Enter the appliance's probability of being on:");
 		double prob = scnr.nextDouble();
-		System.out.println("Enter the appliance's location ID:");
 		if (type) {
 			System.out.println("Enter the appliance's low usage percent (1.0-0.0):");
 			double low = scnr.nextDouble();
