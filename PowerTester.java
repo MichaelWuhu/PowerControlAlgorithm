@@ -322,7 +322,7 @@ public class PowerTester {
 			 // Handle IO exception
 			 e.printStackTrace();
 		 }
-		
+		scnr.nextLine();
 		
 		
 	}
@@ -366,7 +366,7 @@ public class PowerTester {
 	public static void main(String[] args) {
 
 		//User interactive part
-		String option1;
+		char option1;
 		
 		//clear file before use
 		String file = directoryPath + folderName + "/" + fileName;
@@ -387,30 +387,32 @@ public class PowerTester {
 			System.out.println("Type \"F\" Read Appliances from a file");
 			System.out.println("Type \"S\" To Start the simulation");
 			System.out.println("Type \"Q\" Quit the program");
-			option1 = scnr.nextLine();
+			option1 = scnr.nextLine().charAt(0);
 			
-			if (option1.equals("A")) {
+			if (option1 == 'A')) {
 				addApplication();
 			}
-			else if (option1.equals("D")) {
+			else if (option1 == 'D') {
 				deleteApp();
 			}
-			else if (option1.equals("L")) {
-				
+			else if (option1 == 'L') {
+				for (int i = 0; i < wholeArea.size(); ++i) {
+					System.out.println(wholeArea.get(i).toString());
+				}
 			}
-			else if (option1.equals("F")) {
+			else if (option1 == 'F') {
 				System.out.println("Enter the file path: ");
 				String filePath = scnr.nextLine();
 				readAppFile(filePath);
 			}
-			else if (option1.equals("S")) {
+			else if (option1 == 'S') {
 				if (wholeArea.size() <= 0) {
 					System.out.println("Please add appliances first, either manually or from a file.");
 				} else {
 					simulation();
 				}
 			}
-			else if (option1.equals("Q")) {
+			else if (option1 == 'Q') {
 				System.exit(0);
 			}
 			else {
