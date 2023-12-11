@@ -13,8 +13,7 @@ public class PowerTester {
 	static Scanner scnr = new Scanner(System.in);
 	static String folderName = "PowerGrid";
 	static String directoryPath = "C:/";
-	
-	public static void fileWrite(int time) {
+	public static void fileWrite(int time, int imapact, int[] active, int[] smart) {
 		// Names for the file path
         String fileName = "TimeStep " + (time+1) + ".txt";
 
@@ -78,14 +77,15 @@ public class PowerTester {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found. Try again.");
+			System.out.println("File not found");
 		}
 	}
 	public static void simulation() {
 		
 		int maxWattage = 0;
 		int timeSteps = 0;
-		//ArrayList<Long> totalLocations = (ArrayList<Long>) locationList.clone();
+		int[] locationPoints = new int[locationList.size()];
+		int[] smartPoints = new int[locationList.size()];
 		
 		System.out.println("Enter total allowed wattage:");
 		maxWattage = scnr.nextInt();
@@ -106,11 +106,13 @@ public class PowerTester {
 		///////////////////////////////////////////////////////////
 		
 		for ( int k = 0; k < timeSteps; ++k ) {
+			System.out.println("/////////////// Time Step: " + (k+1) + " ///////////////");
 			divArea.clear();
 			ArrayList<Long> totalLocations = (ArrayList<Long>) locationList.clone();
 			int totalWattage = 0;
 			int locationCounter = 0;
 			int T = 0;
+			int appCount = 0;
 			// Loop to initialise whether an appliance is on or off
 			for (int i = 0; i < wholeArea.size(); ++i) {
 				wholeArea.get(i).setIsOn(false);
@@ -136,9 +138,9 @@ public class PowerTester {
 				divArea.add(locale);
 			}
 			/////////////////////////////////////////
-			//////// Start of the process for turning appliances off
+			//////// Start of the process for turning appliances off or low
 			///////////////////////////////////////////////////////////
-			System.out.println("Total Wattage: " + totalWattage);
+			System.out.println("Total Starting Wattage: " + totalWattage);
 			while (totalWattage > maxWattage) {
 				
 				totalWattage = 0;
@@ -186,6 +188,7 @@ public class PowerTester {
 							locationLow = i;
 						}
 					}
+					appCount += divArea.get(locationLow).size();
 					totalLocations.remove(locationLow);
 					divArea.remove(locationLow);
 					smartOnApps.clear();
@@ -215,17 +218,71 @@ public class PowerTester {
 				
 			}
 			
+			
+			for (int i = 0; i < locationList.size(); ++i) {
+				long location = locationList.get(i);
+				for (int h = 0; h < smartOnApps.size(); ++h) {
+					if (smartOnApps.get(h).getOnLow() && smartOnApps.get(h).getLocation() == location) {
+						smartPoints[i] += 1;
+					}
+				}
+				for (int j = 0; j < totalLocations.size(); ++j) {
+					if (location == totalLocations.get(j)) {
+						locationPoints[i] += 1;
+					}
+				}
+			}
 			/////////////////////////////////////////
 			//////// Printing data from the Time Step
 			///////////////////////////////////////////////////////////
-			
 			System.out.println("Total Wattage After: " + totalWattage);
 			System.out.println("Ammount of Smart Appliances set to Low: " + T);
-			System.out.println("Ammount of Locations Browned Out:" + locationCounter);
+			System.out.println("Ammount of Locations Browned Out: " + locationCounter);
+			System.out.println("Amount of Appliances Turned Off: " + appCount);
 			System.out.println();
-			fileWrite(k);
+		}
+		
+		/////////////////////////////////////////
+		//////// Printing Summary of all Time Steps
+		///////////////////////////////////////////////////////////
+		System.out.println("/////////////// Summary ///////////////");
+		int impactLocation = 0;
+		int active = locationPoints[0];
+		int smart = 0;
+		for (int i = 0; i < locationPoints.length; ++i) {
+			if (active > locationPoints[i]) {
+				active = locationPoints[i];	
+			}
+		}
+		for ( int i = 0; i < smartPoints.length; ++i) {
+			if (active == locationPoints[i] && smart <= smartPoints[i]) {
+				smart = smartPoints[i];
+				impactLocation  = i;
+				
+			}
+		}
+		if (smart == 0 && active == 0) {
+			int brown = 0;
+			for (int i = 0; i < locationPoints.length; ++i) {
+				if (locationPoints[i] == 0) {
+					brown += 1;
+				}
+			}
+			System.out.println(brown + " locations were browned out every time for all " + timeSteps + " runs");
+			
+		} else if (timeSteps == locationPoints[impactLocation]) {
+			
+			System.out.println("Most Impacted Location: " + locationList.get(impactLocation) + " with " + smartPoints[impactLocation] + 
+					" total appliances set to low over the course of " + timeSteps + " runs");
+			
+		} else {
+			
+			System.out.println("Most Impacted Location: " + locationList.get(impactLocation) + " with " + (timeSteps-locationPoints[impactLocation]) + 
+					" total brown outs and " + smartPoints[impactLocation] + " total appliances set to low over the course of " + timeSteps + " runs" );
 			
 		}
+		System.out.println();
+		
 	}
 	
 	public static void addApplication() {
@@ -236,6 +293,7 @@ public class PowerTester {
 
 		//User interactive part
 		String option1;
+		readAppFile("C:/PowerGrid/app.txt");
 		while(true){// Application menu to be displayed to the user.
 			System.out.println("Select an option:");
 			System.out.println("Type \"A\" Add an appliance");
