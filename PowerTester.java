@@ -293,7 +293,6 @@ public class PowerTester {
 
 		//User interactive part
 		String option1;
-		readAppFile("C:/PowerGrid/app.txt");
 		while(true){// Application menu to be displayed to the user.
 			System.out.println("Select an option:");
 			System.out.println("Type \"A\" Add an appliance");
