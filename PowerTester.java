@@ -120,11 +120,11 @@ public class PowerTester {
 			for (int i = 0; i < wholeArea.size(); ++i) {
 				wholeArea.get(i).setIsOn(false);
 				wholeArea.get(i).updateStatus();
-				if (wholeArea.get(i).isOn() && wholeArea.get(i).getType()) {
+				if (wholeArea.get(i).getIsOn() && wholeArea.get(i).getType()) {
 					totalWattage += wholeArea.get(i).getOnWattage();
 					//smartOnApps.add((SmartAppliance) wholeArea.get(i));
 					
-				} else if (wholeArea.get(i).isOn()) {
+				} else if (wholeArea.get(i).getIsOn()) {
 					totalWattage += wholeArea.get(i).getOnWattage();
 					//onApps.add(wholeArea.get(i));
 				}
@@ -134,7 +134,7 @@ public class PowerTester {
 			for (int i = 0; i < locationList.size(); ++i) {
 				ArrayList<Appliance> locale = new ArrayList<>();
 				for (int j = 0; j < wholeArea.size(); ++j) {
-					if (locationList.get(i).equals(wholeArea.get(j).getLocation()) && wholeArea.get(j).isOn()) {
+					if (locationList.get(i).equals(wholeArea.get(j).getLocation()) && wholeArea.get(j).getIsOn()) {
 						locale.add(wholeArea.get(j));
 					}
 				}
@@ -389,7 +389,7 @@ public class PowerTester {
 			System.out.println("Type \"Q\" Quit the program");
 			option1 = scnr.nextLine().charAt(0);
 			
-			if (option1 == 'A')) {
+			if (option1 == 'A') {
 				addApplication();
 			}
 			else if (option1 == 'D') {

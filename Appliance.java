@@ -52,8 +52,8 @@ public class Appliance {
 		return location + "," + applianceId + "," + onWattage + "," + probability + "," + type;
 	}
 
-    public void setIsOn() {
-        this.isOn = true;
+    public void setIsOn(boolean isOn) {
+        this.isOn = isOn;
     }
     
     // method to turn appliance on or off based on probability
