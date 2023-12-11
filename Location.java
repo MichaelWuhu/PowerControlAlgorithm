@@ -25,17 +25,21 @@ public class Location {
         int indexOn;
         for (int i = 0 ; i < appliance.length ; i++){
             if (appliances[i].getIsSmart) {
+                if (appliance[i].setOnlow(false)){
                 appliance[i].setOnlow(true);
                 indexSmartOn += 1;
+                }
             } else{
-                appliances[i].isOn(false);
+                if (appliances[i].isOn(true)){
+                    appliances[i].isOn(false);
                 indexOn +=1;
+                }
             }
         }
     }
 
     public String toString(){
-        return "Number of smart appliances set low: " indexSmartOn + "\nNumber of appliances turned off: " + indexOn + "\nTotal number of appliances affected: " + (indexSmartOn + indexOn) ;
+        return "Total number of appliances affected: " + (indexSmartOn + indexOn) + "\nNumber of smart appliances set low: " indexSmartOn + "\nNumber of appliances turned off: " + indexOn + "\nNumber of Appliances: " + appliance.length + "\nPercentage of devices affected: " + ((indexSmartOn + indexOn)/appliance.length) ;
     }
 
 }
