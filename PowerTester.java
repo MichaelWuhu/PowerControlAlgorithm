@@ -87,7 +87,10 @@ public class PowerTester {
 	}
 
 	public static void simulation() {
-
+		
+		int totalAppOff = 0;
+		int totalSmartLow = 0;
+		int totalBrown = 0;
 		int maxWattage = 0;
 		int timeSteps = 0;
 		int[] locationPoints = new int[locationList.size()];
@@ -240,6 +243,9 @@ public class PowerTester {
 			/////////////////////////////////////////
 			//////// Printing data from the Time Step to console and file
 			///////////////////////////////////////////////////////////
+			totalAppOff += appCount;
+			totalSmartLow += T;
+			totalBrown += locationCounter;
 			System.out.println("/////////////// Time Step: " + (k + 1) + " ///////////////");
 			System.out.println("Total Starting Wattage: " + preWattage);
 			System.out.println("Total Wattage After: " + totalWattage);
@@ -284,6 +290,15 @@ public class PowerTester {
 			// Create a FileWriter object to write to the file
 			FileWriter writer = new FileWriter(filePath, true);
 			writer.write("/////////////// Summary ///////////////");
+			writer.write(System.lineSeparator());
+			writer.write("Total amount of Appliances turned off: " + totalAppOff);
+			System.out.println("Total amount of Appliances turned off: " + totalAppOff);
+			writer.write(System.lineSeparator());
+			writer.write("Total amount of Smart Appliances turned low: " + totalSmartLow);
+			System.out.println("Total amount of Smart Appliances turned low: " + totalSmartLow);
+			writer.write(System.lineSeparator());
+			writer.write("Total amount of Locations turned browned out: " + totalBrown);
+			System.out.println("Total amount of Locations turned browned out: " + totalBrown);
 			writer.write(System.lineSeparator());
 			if (smart == 0 && active == 0) {
 				int brown = 0;
