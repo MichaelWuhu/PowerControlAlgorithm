@@ -334,19 +334,23 @@ public class PowerTester {
 	}
 
 	public static void addApplication() {
-		System.out.println("Type \"true\" if the appliance is smart:");
+		System.out.println("Type \"true\" if the appliance is smart: (boolean)");
 		boolean type = scnr.nextBoolean();
-		System.out.println("Enter the appliance's location ID:");
+		System.out.println("Enter the appliance's location ID: (integer)");
 		int location = scnr.nextInt();
-		System.out.println("Enter the name of the appliance:");
+		System.out.println("Enter the name of the appliance: (string)");
 		String name = scnr.next();
-		System.out.println("Enter the appliance's watt usage:");
+		System.out.println("Enter the appliance's watt usage: (integer)");
 		int watts = scnr.nextInt();
-		System.out.println("Enter the appliance's probability of being on:");
+		System.out.println("Enter the appliance's probability of being on: (double)");
 		double prob = scnr.nextDouble();
+		double low;
 		if (type) {
 			System.out.println("Enter the appliance's low usage percent (1.0-0.0):");
-			double low = scnr.nextDouble();
+			do {
+				low = scnr.nextDouble();
+			} while (!(low <= 1.0 && low >= 0));
+			
 			SmartAppliance newSmart = new SmartAppliance(type, watts, prob, location, name, low);
 			wholeArea.add(newSmart);
 		} else {
