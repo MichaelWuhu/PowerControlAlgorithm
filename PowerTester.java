@@ -371,6 +371,8 @@ public class PowerTester {
 		//clear file before use
 		String file = directoryPath + folderName + "/" + fileName;
 		try {
+			File directory = new File(directoryPath, folderName);
+	        directory.mkdirs();
             // Create a FileWriter object to write to the file
             FileWriter writer = new FileWriter(file);
             writer.close();
