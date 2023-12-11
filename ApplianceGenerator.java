@@ -26,7 +26,7 @@ public class ApplianceGenerator {
 
 	public static void main( String [] args ) throws IOException {
 		Appliance [] app = new Appliance[100];  // default 100 possible appliance types
-		File inputFile = new File(directoryPath + folderName + "/" + "ApplianceDetail.txt");
+		File inputFile = new File("ApplianceDetail.txt");
 		Scanner scan = new Scanner( inputFile );
 		int count=0;
 		while ( scan.hasNext( ) ) {
