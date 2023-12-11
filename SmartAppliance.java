@@ -5,7 +5,7 @@ public class SmartAppliance extends Appliance{
     private int onWattage = super.getOnWattage();
 	
     public SmartAppliance(boolean type, int onWattage, double probability, int location, String applianceId, double lowModeReduction) { // initializes SmartAppliance object
-        super(applianceId, onWattage, probability, location, applianceId, isSmart);
+        super(applianceId, onWattage, probability, location, applianceId);
         this.onLow = onLow;
         this.lowModeReduction = lowModeReduction;
     }
