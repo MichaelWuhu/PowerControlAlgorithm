@@ -49,13 +49,13 @@ public class Appliance {
     }
 
     public String toString() {
-		return location + "," + applianceId + "," + onWattage + "," + probability + "," + type;
-	}
+        return location + "," + applianceId + "," + onWattage + "," + probability + "," + type;
+    }
 
     public void setIsOn(boolean isOn) {
         this.isOn = isOn;
     }
-    
+
     // method to turn appliance on or off based on probability
     public void updateStatus() {
         Random random = new Random();
@@ -65,5 +65,4 @@ public class Appliance {
         isOn = randomValue < probability;
     }
 
-    
 }
