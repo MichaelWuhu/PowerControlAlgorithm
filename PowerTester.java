@@ -1,22 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 import java.util.Collections;
 import java.util.Comparator;
->>>>>>> origin/Simulation
 import java.io.*;
 
 public class PowerTester {
 	static ArrayList<Appliance> wholeArea = new ArrayList<>();
-<<<<<<< HEAD
-	static ArrayList<ArrayList<Appliance>> divArea = new ArrayList<>();
-	static ArrayList<Long> locationList = new ArrayList<>();
-	static Scanner scnr = new Scanner(System.in);
-	
-	public void readAppFile(String file) {
-=======
-	static ArrayList<Long> locationList = new ArrayList<>();
+	static ArrayList<Integer> locationList = new ArrayList<>();
 	static ArrayList<ArrayList<Appliance>> divArea = new ArrayList<>();
 	static ArrayList<Appliance> onApps = new ArrayList<>();
 	static ArrayList<SmartAppliance> smartOnApps = new ArrayList<>();
@@ -58,45 +48,20 @@ public class PowerTester {
 	}
 	
 	public static void readAppFile(String file) {
->>>>>>> origin/Simulation
 		try {
 			Scanner scnr = new Scanner(new File(file));
 			while (scnr.hasNext()) {
 				String placeholder = scnr.nextLine();
 				try (Scanner parse = new Scanner(placeholder)) {
 					parse.useDelimiter(",");
-					long location = parse.nextLong();
+					int location = parse.nextInt();
 					String name = parse.next();
 					int powerUse = parse.nextInt();
-<<<<<<< HEAD
-					double state = parse.nextDouble();
-=======
 					double prob = parse.nextDouble();
->>>>>>> origin/Simulation
 					boolean type = parse.nextBoolean();
 					double percent = parse.nextDouble();
 					locationList.add(location);
 					if (type) {
-<<<<<<< HEAD
-						SmartAppliance smartApp = new SmartAppliance(type, powerUse, state, location, name, percent);
-						wholeArea.add(smartApp);
-					} else {
-						Appliance App = new Appliance(type, powerUse, state, location, name);
-						wholeArea.add(app);
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-    public static void main(String[] args) {
-		//User interactive part
-		String option1;
-		
-=======
 						SmartAppliance smartApp = new SmartAppliance(type, powerUse, prob, location, name, percent);
 						wholeArea.add(smartApp);
 					} else {
@@ -146,7 +111,7 @@ public class PowerTester {
 		
 		for ( int k = 0; k < timeSteps; ++k ) {
 			divArea.clear();
-			ArrayList<Long> totalLocations = (ArrayList<Long>) locationList.clone();
+			ArrayList<Integer> totalLocations = (ArrayList<Integer>) locationList.clone();
 			int totalWattage = 0;
 			int locationCounter = 0;
 			int T = 0;
@@ -259,7 +224,7 @@ public class PowerTester {
 			
 			
 			for (int i = 0; i < locationList.size(); ++i) {
-				long location = locationList.get(i);
+				int location = locationList.get(i);
 				for (int h = 0; h < smartOnApps.size(); ++h) {
 					if (smartOnApps.get(h).getOnLow() && smartOnApps.get(h).getLocation() == location) {
 						smartPoints[i] += 1;
@@ -334,7 +299,7 @@ public class PowerTester {
 				 writer.write(System.lineSeparator());
 				 for (int i = 0; i < brownLocation.size(); ++i) {
 					 System.out.println(locationList.get(brownLocation.get(i)));
-					 writer.write(Long.toString(locationList.get(brownLocation.get(i))));
+					 writer.write(Integer.toString(locationList.get(brownLocation.get(i))));
 					 writer.write(System.lineSeparator());
 				 }
 				 
@@ -366,7 +331,7 @@ public class PowerTester {
 		System.out.println("Type \"true\" if the appliance is smart:");
 		boolean type = scnr.nextBoolean();
 		System.out.println("Enter the appliance's location ID:");
-		long location = scnr.nextLong();
+		int location = scnr.nextInt();
 		System.out.println("Enter the name of the appliance:");
 		String name = scnr.nextLine();
 		System.out.println("Enter the appliance's watt usage:");
@@ -414,7 +379,6 @@ public class PowerTester {
             e.printStackTrace();
         }
 		
->>>>>>> origin/Simulation
 		while(true){// Application menu to be displayed to the user.
 			System.out.println("Select an option:");
 			System.out.println("Type \"A\" Add an appliance");
@@ -426,28 +390,15 @@ public class PowerTester {
 			option1 = scnr.nextLine();
 			
 			if (option1.equals("A")) {
-<<<<<<< HEAD
-				
-			}
-			else if (option1.equals("D")) {
-				
-=======
 				addApplication();
 			}
 			else if (option1.equals("D")) {
 				deleteApp();
->>>>>>> origin/Simulation
 			}
 			else if (option1.equals("L")) {
 				
 			}
 			else if (option1.equals("F")) {
-<<<<<<< HEAD
-				
-			}
-			else if (option1.equals("S")) {
-				
-=======
 				System.out.println("Enter the file path: ");
 				String filePath = scnr.nextLine();
 				readAppFile(filePath);
@@ -458,7 +409,6 @@ public class PowerTester {
 				} else {
 					simulation();
 				}
->>>>>>> origin/Simulation
 			}
 			else if (option1.equals("Q")) {
 				System.exit(0);
@@ -468,9 +418,5 @@ public class PowerTester {
 			}
 			
 		}
-<<<<<<< HEAD
-    }
-=======
 	}
->>>>>>> origin/Simulation
 }
